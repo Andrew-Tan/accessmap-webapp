@@ -31,6 +31,8 @@ export const MAP_CLICK = 'MAP_CLICK';
 
 export const SET_TRACKING = 'SET_TRACKING';
 
+const CLIENT_NAME = "emission-test-v1.0.0";
+
 // Action creators
 export function tripPlanningOn(poi) {
   return {
@@ -39,6 +41,9 @@ export function tripPlanningOn(poi) {
     meta: {
       analytics: {
         type: 'trip-planning-on',
+        payload: {
+          clientName: CLIENT_NAME,
+        }
       }
     }
   };
@@ -51,6 +56,9 @@ export function tripPlanningOff(destination) {
     meta: {
       analytics: {
         type: 'trip-planning-off',
+        payload: {
+          clientName: CLIENT_NAME
+        }
       }
     }
   };
@@ -70,7 +78,8 @@ export function requestRoute(origin, destination, params) {
         payload: {
           origin,
           destination,
-          params
+          params,
+          clientName: CLIENT_NAME
         }
       }
     }
@@ -85,7 +94,8 @@ export function receiveRoute(routeResult) {
       analytics: {
         type: 'receive-route',
         payload: {
-          routeResult
+          routeResult,
+          clientName: CLIENT_NAME
         }
       }
     }
@@ -106,7 +116,8 @@ export function failedRoute(origin, destination, error) {
         payload: {
           origin,
           destination,
-          error
+          error,
+          clientName: CLIENT_NAME
         }
       }
     }
@@ -184,6 +195,9 @@ export function toggleCurbRamps() {
       meta: {
         analytics: {
           type: 'set-incline-max',
+          payload: {
+            clientName: CLIENT_NAME
+          }
         }
       }
     });
@@ -200,7 +214,8 @@ export function setInclineMax(value) {
         analytics: {
           type: 'set-incline-max',
           payload: {
-            value
+            value,
+            clientName: CLIENT_NAME
           }
         }
       }
@@ -218,7 +233,8 @@ export function setInclineMin(value) {
         analytics: {
           type: 'set-incline-min',
           payload: {
-            value
+            value,
+            clientName: CLIENT_NAME
           }
         }
       }
@@ -236,7 +252,8 @@ export function setInclineIdeal(value) {
         analytics: {
           type: 'set-incline-ideal',
           payload: {
-            value
+            value,
+            clientName: CLIENT_NAME
           }
         }
       }
@@ -254,7 +271,8 @@ export function setOrigin(origin) {
         analytics: {
           type: 'set-origin',
           payload: {
-            origin
+            origin,
+            clientName: CLIENT_NAME
           }
         }
       }
@@ -272,7 +290,8 @@ export function setDestination(destination) {
         analytics: {
           type: 'set-destination',
           payload: {
-            destination
+            destination,
+            clientName: CLIENT_NAME
           }
         }
       }
@@ -289,7 +308,8 @@ export function setPOI(poi) {
       analytics: {
         type: 'set-poi',
         payload: {
-          poi
+          poi,
+          clientName: CLIENT_NAME
         }
       }
     }
@@ -304,7 +324,8 @@ export function logBounds(bounds) {
       analytics: {
         type: 'log-bounds',
         payload: {
-          bounds
+          bounds,
+          clientName: CLIENT_NAME
         }
       }
     }
@@ -317,6 +338,13 @@ export function setOriginDestination(origin, destination) {
     payload: {
       origin,
       destination
+    },
+    meta: {
+      analytics: {
+        payload: {
+          clientName: CLIENT_NAME
+        }
+      }
     }
   };
 }
@@ -327,14 +355,15 @@ export function swapWaypoints(origin, destination) {
       type: SWAP_WAYPOINTS,
       payload: {
         origin,
-        destination
+        destination,
       },
       meta: {
         analytics: {
           type: 'swap-waypoints',
           payload: {
             origin,
-            destination
+            destination,
+            clientName: CLIENT_NAME
           }
         }
       }

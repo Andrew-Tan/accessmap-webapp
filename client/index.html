@@ -6,7 +6,97 @@
     <link rel="icon" href="favicon.ico?v=2" />
     <title>AccessMap</title>
   </head>
+
+  <style>
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+
   <body>
+    <!-- The Modal -->
+    <div id="errProfile" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <!-- span class="close">&times;</span -->
+        <p>
+          Did not receive Emisson user profile, cannot start AccessMap. Please
+          ensure you have successfully signed in to Emission. If you believe
+          this is an error, please contact the AccessMap group.
+        </p>
+        <p id="debugInfo"></p>
+      </div>
+
+    </div>
+
+    <script>
+      // Get the modal
+      const modal = document.getElementById('errProfile');
+      const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+      const urlParams = new URLSearchParams(window.location.search);
+      if (uuidPattern.test(urlParams.get('emissionId'))) {
+        console.log("Emission ID:", urlParams.get('emissionId'));
+        modal.style.display = "none";
+        window.location._emissionId = urlParams.get('emissionId');
+      } else {
+        console.log("incorrect emission id received, stop.");
+        let text = urlParams.get('emissionId');
+        switch (text) {
+          case "":
+            text = "[Empty]";
+            break;
+          case null:
+            text = "[No Param]";
+            break;
+          default:
+            break;
+        }
+        document.getElementById("debugInfo").innerHTML = 'Received: ' + text;
+
+        modal.style.display = "block";
+        window.stop();
+      }
+    </script>
+
+
+
+
     <div id="root" style="height: 100%;"></div>
     <script src="/vendor.bundle.js"></script>
     <script src="/map.bundle.js"></script>

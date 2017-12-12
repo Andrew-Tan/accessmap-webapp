@@ -23,6 +23,16 @@ if (process.env.NODE_ENV === 'development') {
     includeReferrer: true
   });
 
+  // Get Emission ID
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if (uuidPattern.test(window.location._emissionId)) {
+    console.log("user id received:", window.location._emissionId);
+    rakam.setUserId(window.location._emissionId);
+  } else {
+    console.log("user id not found, stop!");
+    window.stop();
+  }
+
   const analyticsMiddleware = analytics(({ type, payload }, state) => {
     if (state.userSettings.track || process.env.NODE_ENV === 'development') {
       rakam.logEvent(type, { ...state.analytics, ...payload });
