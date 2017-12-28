@@ -28,6 +28,7 @@ export const SET_CENTER_AND_ZOOM = 'SET_CENTER_AND_ZOOM';
 export const MAP_MOVE = 'MAP_MOVE';
 
 export const MAP_CLICK = 'MAP_CLICK';
+export const CLEAR_SELECTED_FEATURES = 'CLEAR_SELECTED_FEATURES';
 
 export const SET_TRACKING = 'SET_TRACKING';
 
@@ -194,7 +195,7 @@ export function toggleCurbRamps() {
       type: TOGGLE_CURBRAMPS,
       meta: {
         analytics: {
-          type: 'set-incline-max',
+          type: 'toggle-curbramps',
           payload: {
             clientName: CLIENT_NAME
           }
@@ -424,7 +425,26 @@ export function mapMove(center, zoom, bounds) {
 export function mapClick(features) {
   return {
     type: MAP_CLICK,
-    payload: features
+    payload: features,
+    meta: {
+      analytics: {
+        type: 'map-click',
+        payload: {
+          features
+        }
+      }
+    }
+  };
+}
+
+export function clearSelectedFeatures() {
+  return {
+    type: CLEAR_SELECTED_FEATURES,
+    meta: {
+      analytics: {
+        type: 'clear-selected-features'
+      }
+    }
   };
 }
 
