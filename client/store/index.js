@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
   // Root URL + /analytics
   const analyticsURL = '//' + window.location.host + '/analytics';
   const analyticsWriteKey = process.env.ANALYTICS_KEY;
-  rakam.init(analyticsWriteKey, null, {
+  rakam.init(analyticsWriteKey, window.location._emissionId, {
     apiEndpoint: analyticsURL,
     includeUtm: true,
     trackClicks: true,
