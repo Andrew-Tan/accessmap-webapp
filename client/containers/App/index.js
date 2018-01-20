@@ -275,7 +275,7 @@ class App extends Component {
 
       if (selectedFeature.layer === 'sidewalk') {
         featureTitle = 'Sidewalk';
-        featureProperties = [selectedFeature.properties.grade];
+        featureProperties = [selectedFeature.properties.incline];
       } else if (selectedFeature.layer === 'crossing-ramps') {
         featureTitle = 'Street Crossing';
         featureProperties=[{
@@ -568,7 +568,10 @@ class App extends Component {
               const features = m.queryRenderedFeatures(e.point, {
                 layers: CLICKABLE_LAYERS
               });
-              m.getCanvas().style.cursor = features.length ? 'pointer': '';
+              m.getCanvas().style.cursor = features.length ? 'pointer': 'default';
+            }}
+            onDrag={(m, e) => {
+              m.getCanvas().style.cursor = 'grabbing';
             }}
             onClick={(m, e) => {
               const features = m.queryRenderedFeatures(e.point, {
